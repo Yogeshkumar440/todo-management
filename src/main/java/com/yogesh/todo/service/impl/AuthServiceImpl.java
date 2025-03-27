@@ -1,5 +1,6 @@
 package com.yogesh.todo.service.impl;
 
+import com.yogesh.todo.dto.LoginDto;
 import com.yogesh.todo.dto.RegisterDto;
 import com.yogesh.todo.entity.Role;
 import com.yogesh.todo.entity.User;
@@ -9,6 +10,10 @@ import com.yogesh.todo.repository.UserRepository;
 import com.yogesh.todo.service.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +27,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public String register(RegisterDto registerDto) {
@@ -49,5 +55,16 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(user);
 
         return "User Registered Successfully!";
+    }
+
+    @Override
+    public String login(LoginDto loginDto) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                loginDto.getUsernameOrEmail(),
+                loginDto.getPassword()
+        ));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return "User logged in successfully";
     }
 }

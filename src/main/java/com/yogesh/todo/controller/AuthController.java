@@ -1,6 +1,7 @@
 package com.yogesh.todo.controller;
 
 
+import com.yogesh.todo.dto.LoginDto;
 import com.yogesh.todo.dto.RegisterDto;
 import com.yogesh.todo.service.AuthService;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,13 @@ public class AuthController {
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
         String response = authService.register(registerDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    // Build Login REST API
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
+        String response = authService.login(loginDto);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
 }
