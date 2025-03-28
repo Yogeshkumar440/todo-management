@@ -41,6 +41,22 @@ mvn clean install
 mvn spring-boot:run
 ```
 
+### 4. **Before registering a user for the first time, insert the roles into the database:**
+   ```sql
+   INSERT INTO roles (id, name) VALUES (1, 'ROLE_ADMIN');
+   INSERT INTO roles (id, name) VALUES (2, 'ROLE_USER');
+   ```
+
+## API Documentation (Swagger UI)
+The API documentation is available via Swagger UI.
+- Open your browser and go to:
+  👉 [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- Click on the **Authorize 🔓 button** (top right) and enter your JWT token in this format:
+  ```
+  Bearer your_jwt_token
+  ```
+- You can now test the endpoints directly from Swagger UI.
+
 ## API Endpoints
 
 ### **Authentication & User Management**
